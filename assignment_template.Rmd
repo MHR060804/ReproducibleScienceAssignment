@@ -179,7 +179,7 @@ ggplot(data = penguins_clean[1:152, ],
 
 This scatter plot visually portrays the relationship between culmen depth (x-axis) and culmen length (y-axis) in Adelie penguins. This increasing trend observed across the data points within this scatter plot suggests a (weak) positive, linear relationship between culmen depth and culmen length. A large proportion of the data points appear to fall within the following ranges: 17 - 19 mm (culmen depth) and 34 - 42mm (culmen length). There are a few evident outliers and extreme values that deviate from the overall pattern, such as the individual with a depth and length of \~21.6 and 46 respectively.
 
-#### Statistical test: Linear Regression analaysis
+#### Statistical test: Linear Regression analysis
 
 ```{r}
 
@@ -228,7 +228,7 @@ While the model is statistically significant, the low R-squared value suggest th
 
 *Upload your RProject you created for **Question 2** and any files and subfolders used to GitHub. Do not include any identifiers such as your name. Make sure your GitHub repo is public.*
 
-*GitHub link:*
+*GitHub link:* <https://github.com/MHR060804/ReproducibleScienceAssignment/tree/main>
 
 ### b) Share your repo with a partner, download, and try to run their data pipeline.
 
@@ -252,13 +252,19 @@ While the model is statistically significant, the low R-squared value suggest th
 
 -   *If you needed to alter your partner's figure using their code, do you think that would be easy or difficult, and why?*
 
-    Overall, I think that it would be relatively easy to alter different components of my partners figures using theri code. The minimal code used to generate each plot makes it easier to determine which parts of the code are responsible for the different visual elements. This simplicity enhances the code's readability and adaptability.
+    Overall, I think that it would be relatively easy to alter different components of my partners figures using their code. The minimal code used to generate each plot makes it easier to determine which parts of the code are responsible for the different visual elements. This simplicity enhances the code's readability and adaptability.
 
     However, there is one aspect of the code used to generate the plots that could have further clarification. In order to generate their plots my pattern has filtered the data set to only include lines 278:345, which corresponds to the chinstrap penguins. While the filtering process is required for their analysis, it was not explicitly explained in the code with a comment. Individuals that do not have prior knowledge of the data set may not understand the purpose of this step. If a user were to alter this part of the code without realizing its significance, they may inadvertently include data from other penguin species, which would alter the results of the analysis. A brief comment explaining the filtering step would make the code more reproducible.
 
 ### d) Reflect on your own code based on your experience with your partner's code and their review of yours. (300-500 words)
 
 -   *What improvements did they suggest, and do you agree?*
+
+    One suggestion made by my partner was to improve the clarity of the comment regarding the installation of the packages required to run my code. I do agree with this feedback as some individuals may not be familiar with the best practices for installing packages. Therefore, it could be helpful for me to provide more explicit instructions at the beginning of the script, listing the required packages separately from the main code and a clear comment explaining how best to install them.
+
+    Additionally, my partner suggested that i emphasize the significance of the step where i filter the data set to only include measurements for the Adelie penguins. This is a reasonable suggestion,a s while I do mention that I am focusing solely on Adelie penguins and that I filter the data accordingly, I do not explicitly state the significance of this step in the code. Emphasizing this is crucial for the reproducibility of my analysis.
+
+    Finally, my partner suggested adding a README file to provide a broad overview of the project. I do believe that my script already includes detailed information about each stage of my analysis. However, I do agree that a README file, providing a summary of the analysis, could enhance the clarity and accessibility of my work, thus being useful for others aiming to reproduce my analysis.
 
 -   *What did you learn about writing code for other people?*
 
