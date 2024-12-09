@@ -10,8 +10,6 @@ date: "2023-10-09"
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-testing text
-
 ## QUESTION 01: Data Visualization for Science Communication
 
 *Use the following references to guide you:*
