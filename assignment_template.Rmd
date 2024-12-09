@@ -1,0 +1,243 @@
+---
+title: "Homework Template"
+output:
+  html_document: default
+  pdf_document: default
+date: "2023-10-09"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## QUESTION 01: Data Visualization for Science Communication
+
+*Use the following references to guide you:*
+
+-   [*https://www.nature.com/articles/533452a*](https://www.nature.com/articles/533452a){.uri}
+-   [*https://elifesciences.org/articles/16800*](https://elifesciences.org/articles/16800){.uri}
+
+### a) Provide your figure here:
+
+```{r bad figure code, echo=FALSE, message=FALSE, warning=FALSE}
+
+#Loading libraries
+library(tidyverse)
+library(palmerpenguins)
+library(janitor)
+library(here)
+
+#Preserving the raw data
+write_csv(penguins_raw, here("data", "penguins_raw.csv"))
+
+#Using piping to remove columns
+penguins_clean <- penguins_raw %>%
+  select(-Comments) %>%
+  select(-starts_with("Delta")) %>%
+  clean_names()
+
+x <- penguins_clean$culmen_depth_mm
+y <- penguins_clean$culmen_length_mm
+plot(x, y, 
+     main = "Culmen Length and Depth of Penguins",
+     xlab = "Culmen Depth (mm)", 
+     ylab = "Culmen Length (mm)", 
+     pch = 19,          
+     col = "gray",    
+     xlim = c(15, 20),
+     ylim = c(30, 40))
+
+
+# There is no need to provide the code for your bad figure, just use echo=FALSE so the code is hidden. Make sure your figure is visible after you knit it. 
+
+```
+
+### b) Write about how your design choices mislead the reader about the underlying data (200-300 words).
+
+My design choices for this figure may mislead the reader about the underlying data, thus preventing an accurate interpretation of the relationship between culmen depth and culmen length.
+
+Selective reporting of results such as through data point selection or axis manipulation, is a significant contributor to irreproducible research (Baker, 2016). In this scatter plot, both the x and the y axis have been adjusted, therefore this figure is not encompassing the full data range for culmen length and culmen depth. By manipulating the axis in this way, certain data points can be emphasized or de-emphasized (Baker, 2016). In this case, manipulation of the axis has meant that not all the data points in the data set are being displayed, which prevents the scatter plot from portraying the true overall trend and relationship between culmen depth and culmen length.
+
+In addition to this, the scatter plot has not been color coordinated according to the three different species in the data set, Adelie, Gentoo and Chinstrap. This means that this scatter plot is failing to account for species-specific differences in culmen length and depth; morphological charactersitics shaped by the distinct foraging strategies and ecological specialization of each species (Grant, 2002). Failing to distinguish between these species, could result in the data suggesting a significant relationship where none exists or it cold obscure genuine relationships that may be present within individual species.
+
+Baker, M. (2016). 1,500 Scientists Lift the Lid on Reproducibility. *Nature*, [online] 533(7604), pp.452–454.
+
+Grant, P.R. (2002). Unpredictable Evolution in a 30-Year Study of Darwin’s Finches. *Science*, 296(5568), pp. 707–711.
+
+------------------------------------------------------------------------
+
+## QUESTION 2: Data Pipeline
+
+### Introduction
+
+Culmen length and culmen depth are two key morphological measurments used to describe the shape and structure of a penguin's bill. Specifically, culmen length refers to the linear distance along the upper ridge of the bill, while culmen depth measures the vertical thickness of this ridge.
+
+This analysis aims to evaluate the relationship between these two characteristics in Adelie penguins. By investigating whether there is a significant directional relationship between culmen length and culmen depth, this study aims to explore potential coupling between these traits and their implication. Understanding the potential relationship between these two traits could provide information on how these traits may evolve together and whether they contribute to functional advantages such as improved foraging efficiency.
+
+Ultimately, this analysis aims to clarify whether the relationship between culmen length and culmen depth in Adelie penguins is significant, providing insights into the morphological adaptations of Adelie penguins and the potential ecological implications.
+
+#### Loading and cleaning the data
+
+```{r Data Exploration}
+
+#Loading libraries
+library(tidyverse)
+library(palmerpenguins)
+library(janitor)
+library(here)
+library(ggplot2)
+
+#Loading penguin data
+head(penguins_raw)
+colnames(penguins_raw)
+
+#Preserving the raw data
+write_csv(penguins_raw, here("data", "penguins_raw.csv"))
+
+#Using piping to remove columns
+penguins_clean <- penguins_raw %>%
+  select(-Comments) %>%
+  select(-starts_with("Delta")) %>%
+  clean_names()
+
+colnames(penguins_clean)
+
+```
+
+### Hypothesis
+
+Null hypothesis: There is no statistically significant relationship between culmen length and culmen depth in Adelie penguins.
+
+Alternative hypothesis: There is a statistically significant relationship between culmen length and culmen depth in Adelie penguins.
+
+### Statistical Methods
+
+The penguin data set used for this analysis was obtained from the Palmer Penguin package in R. The penguins_raw data set contains a range of information about Adelie, Gentoo and Chinstrap penguins, such as their development stage, flipper length, body mass and sex among others.
+
+The two variables that I will be analyzing from this data set are culmen depth (mm) and culmen length for Adelie penguins. In order to observe the general trend between culmen length and culmen depth for the 151 Adelie penguins in the data set, I created a scatter plot, with culmen depth (mm) on the x-axis and culmen length (mm) on the y-axis.
+
+To quantitatively assess the relationship between culmen depth and culmen length in Adelie penguins, I will use a linear regression model. This method will allow me to determine whether there is a statistically significant, directional relationship between these two variabes for this species of penguin. By doing so, I will be able to my null hypothesis against my alternative hypothesis.
+
+Before conducting this analysis, I verified that the data met the assumptions of a linear model. I used a Q-Q plot to assess whether the residuals were normally distributed and a residuals vs fitted plot to evaluate whether the variance of the residuals was consistent across all levels of the independent variable (i.e. homoscedasticity). I also used a scale-location plot and a residuals vs factor level plot to confirm that none of the assumptions of the linear model were violated. After concluding that the data did meet the required assumptions, I fitted a linear model with culmen depth on the x-axis and culmen length on the y-axis using the lm() function and then create a visualization of this model using ggplot().
+
+Lastly, I assessed the fit of the model using a summary table, which provided p-values that I then used to determine the statistical significance of the observed differences.
+
+```{r Statistics}
+
+adelie_data <- penguins_clean[1:152, ]
+
+adelie_lm <- lm(culmen_length_mm ~ culmen_depth_mm, data = adelie_data)
+
+par(mfrow = c(2, 2), mar = c(4, 4, 3, 3))
+
+plot(adelie_lm, which = 1)
+
+plot(adelie_lm, which = 2)
+
+plot(adelie_lm, which = 3)
+
+plot(adelie_lm, which = 5)
+
+
+
+```
+
+Residuals vs fitted plot: This plot shows that the residuals are evenly spread around a horizontal line without any distinct pattern, indicating that there is no obvious non-linear relationship between my two variables.
+
+Normal Q-Q plot: In this plot, the residuals follow a straight line, suggesting that the residuals are approximately normally distributed.
+
+Scale-Location plot: The points in this plot are evenly spread along a horizontal line, indicating that the residuals have constant variance (homoscedasticity) across the range of fitted values.
+
+Residuals vs Factor levels plot: This plot shows that the residuals have a consistent spread and are centered around zero for each year, supporting the assumption of homoscedasiticy.
+
+### Results & Discussion
+
+#### Exploratory Figure: Scatter Plot
+
+```{r}
+ggplot(data = penguins_clean[1:152, ], 
+       aes(x = culmen_depth_mm, y = culmen_length_mm)) +
+  geom_point(color = "hotpink", size = 2) + 
+  labs(
+    title = "Culmen Length vs. Culmen Depth for Adélie Penguins",
+    x = "Culmen Depth (mm)",
+    y = "Culmen Length (mm)"
+  ) +
+  theme_minimal()
+```
+
+This scatter plot visually portrays the relationship between culmen depth (x-axis) and culmen length (y-axis) in Adelie penguins. This increasing trend observed across the data points within this scatter plot suggests a (weak) positive, linear relationship between culmen depth and culmen length. A large proportion of the data points appear to fall within the following ranges: 17 - 19 mm (culmen depth) and 34 - 42mm (culmen length). There are a few evident outliers and extreme values that deviate from the overall pattern, such as the individual with a depth and length of \~21.6 and 46 respectively.
+
+#### Statistical test: Correlation test
+
+```{r}
+adelie_data <- penguins_clean[1:152, ]
+
+adelie_lm <- lm(culmen_length_mm ~ culmen_depth_mm, data = adelie_data)
+
+summary(adelie_lm)
+
+```
+
+The p-value for the intercept is highly significant, indicating that the intercept of this model is statistically different from zero. In addition to this, the p-value for culmen_depth_mm is also highly significant (p\<0.001) suggesting that the observed increase in culmen length as culmen depth increases is unlikley to have occurred by chance. This supports our alternative hypothesis, suggesting that there is a strong and statistically significant positive correlation between culmen depth and culmen length in Adelie penguins.
+
+Although there is significance, the R-squared value is relatively low. This suggest that despite their being a statistically significant relationship, there are likely other factors that also contribute to the variability in culmen length, other than culmen depth.
+
+#### Results Figure: Linear Regression
+
+```{r}
+ggplot(adelie_data, aes(x = culmen_depth_mm, y = culmen_length_mm)) +
+  geom_point() +
+  geom_smooth(method = "lm", col = "blue") +
+  labs(
+    title = "Linear Regression: Culmen Length vs Culmen Depth",
+    x = "Culmen Depth (mm)",
+    y = "Culmen Length (mm)"
+  )
+
+
+```
+
+This plot visualizes the results of the linear regression analysis. The blue line represents the best-fit regression and shows the predicted relationship between culmen length and culmen depth. The grey area around this best-fit regression line, represents confidence intervals.
+
+Overall, this linear regression model clearly portrays a positive linear relationship, where an increase in culmen depth subsequently results in an increase in culmen length.
+
+### Conclusion
+
+This analysis aimed to determine whether there is a statistically significant correlation between culmen depth and culmen length in Adelie penguins. The scatter plot demonstrated that there did appear to be a positive relationship between these two variables. The linear regression model then confirmed that this relationship was statistically significant, as indicated by the highly significant p-value for the effect of culmen depth (p \< 0.001). This suggests that it is possible that these two morphological traits are possibly coupled and evolve together. Coupling of morphological traits such as culmen length and depth could reflect evolutionary optimization for specific ecological roles and indicate that a species is well-adapted to its environment; this relationship could improve foraging efficiency and enable Adelie penguin species to better handle their prey. Understanding this relationship in more detail can allow for further exploration of its implications for the species survival and evolution.
+
+While the model is statistically significant, the low R-squared value suggest that other factors not accounted for in this model may also influence culmen length. Future research could explore other environmental or genetic influences, to further understand the mechanisms behind this observed change in culmen depth relative to culmen length.
+
+------------------------------------------------------------------------
+
+## QUESTION 3: Open Science
+
+### a) GitHub
+
+*Upload your RProject you created for **Question 2** and any files and subfolders used to GitHub. Do not include any identifiers such as your name. Make sure your GitHub repo is public.*
+
+*GitHub link:*
+
+*You will be marked on your repo organisation and readability.*
+
+### b) Share your repo with a partner, download, and try to run their data pipeline.
+
+*Partner's GitHub link:*
+
+*You **must** provide this so I can verify there is no plagiarism between you and your partner.*
+
+### c) Reflect on your experience running their code. (300-500 words)
+
+-   *What elements of your partner's code helped you to understand their data pipeline?*
+
+-   *Did it run? Did you need to fix anything?*
+
+-   *What suggestions would you make for improving their code to make it more understandable or reproducible, and why?*
+
+-   *If you needed to alter your partner's figure using their code, do you think that would be easy or difficult, and why?*
+
+### d) Reflect on your own code based on your experience with your partner's code and their review of yours. (300-500 words)
+
+-   *What improvements did they suggest, and do you agree?*
+
+-   *What did you learn about writing code for other people?*
