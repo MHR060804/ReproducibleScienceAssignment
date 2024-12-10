@@ -23,7 +23,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 #Ensure that the packages listed below are installed before attempting to run the code.
 
-#Loading all necesary libraries
+#Loading all necessary libraries
 library(tidyverse)
 library(palmerpenguins)
 library(janitor)
@@ -43,23 +43,21 @@ penguins_clean <- penguins_raw %>%
 ggplot(data = penguins_clean, aes(x = culmen_depth_mm, y = culmen_length_mm)) +
   geom_point(color = "gray", size = 2) +
   labs(
-    title = "Culmen Length and Depth of Penguins",
+    title = "Culmen Length and Culmen Depth of Adelie, Gentoo and Chinstrap Penguins",
     x = "Culmen Depth (mm)",
     y = "Culmen Length (mm)"
   ) +
   xlim(15, 20) +
-  ylim(30, 40) +
+  ylim(30, 38) +
   theme_minimal()
 
 ```
 
 ### b) Write about how your design choices mislead the reader about the underlying data (200-300 words).
 
-My design choices for this figure may mislead the reader about the underlying data, thus preventing an accurate interpretation of the relationship between culmen depth and culmen length.
+My design choices for this figure may mislead the reader about the underlying data, thus preventing an accurate interpretation of the relationship between culmen depth and culmen length. Selective reporting of results via data point selection or axis manipulation, is a significant contributor to non reproducible research (Baker, 2016). In this scatter plot, both the x and the y axis have been adjusted, therefore this figure is not encompassing the full data range for culmen length and culmen depth. By manipulating the axis in this way, certain data points can be emphasized or de-emphasized (Baker, 2016). In this case, manipulation of the axis has meant that not all the data points in the data set are being displayed, which prevents the scatter plot from portraying the true overall trend and relationship between culmen depth and culmen length in these three species of penguin.
 
-Selective reporting of results such as through data point selection or axis manipulation, is a significant contributor to irreproducible research (Baker, 2016). In this scatter plot, both the x and the y axis have been adjusted, therefore this figure is not encompassing the full data range for culmen length and culmen depth. By manipulating the axis in this way, certain data points can be emphasized or de-emphasized (Baker, 2016). In this case, manipulation of the axis has meant that not all the data points in the data set are being displayed, which prevents the scatter plot from portraying the true overall trend and relationship between culmen depth and culmen length.
-
-In addition to this, the scatter plot has not been color coordinated according to the three different species in the data set, Adelie, Gentoo and Chinstrap. This means that this scatter plot is failing to account for species-specific differences in culmen length and depth; morphological characteristics shaped by the distinct foraging strategies and ecological specialization of each species (Grant, 2002). Failing to distinguish between these species, could result in the data suggesting a significant relationship where none exists or it cold obscure genuine relationships that may be present within individual species.
+In addition to this, the scatter plot has not been color coordinated according to the three different species in the data set, Adelie, Gentoo and Chinstrap. This means that this scatter plot is failing to account for species-specific differences in culmen length and depth, which are morphological characteristics shaped by the distinct foraging strategies and ecological specialization of each species (Grant, 2002). Failing to distinguish between these species, could result in the data suggesting a significant relationship where none exists or it cold obscure genuine relationships that may be present within individual species.
 
 Baker, M. (2016). 1,500 Scientists Lift the Lid on Reproducibility. *Nature*, [online] 533(7604), pp.452–454.
 
@@ -73,7 +71,7 @@ Grant, P.R. (2002). Unpredictable Evolution in a 30-Year Study of Darwin’s Fin
 
 Culmen length and culmen depth are two key morphological measurements used to describe the shape and structure of a penguin's bill. Specifically, culmen length refers to the linear distance along the upper ridge of the bill, while culmen depth measures the vertical thickness of this ridge.
 
-This analysis aims to evaluate the relationship between these two characteristics in Adelie penguins. By investigating whether there is a significant directional relationship between culmen length and culmen depth, this study aims to explore potential coupling between these traits and their implication. Understanding the potential relationship between these two traits could provide information on how these traits may evolve together and whether they contribute to functional advantages such as improved foraging efficiency.
+This analysis aims to evaluate the relationship between these two characteristics in Adelie penguins. By investigating whether there is a significant directional relationship between culmen length and culmen depth, this study aims to explore potential coupling between these traits and their implication. Understanding the potential relationship between these two traits could provide information on how these traits may evolve together and whether they contribute to functional advantages such as improved foraging efficiency in this species of penguin.
 
 Ultimately, this analysis aims to clarify whether the relationship between culmen length and culmen depth in Adelie penguins is significant, providing insights into the morphological adaptations of Adelie penguins and the potential ecological implications.
 
@@ -115,11 +113,11 @@ Alternative hypothesis: There is a statistically significant relationship betwee
 
 ### Statistical Methods
 
-The penguin data set used for this analysis was obtained from the Palmer Penguin package in R. The penguins_raw data set contains a range of information about Adelie, Gentoo and Chinstrap penguins, such as their development stage, flipper length, body mass and sex among others.
+The penguin data set used for this analysis was obtained from the PalmerPenguin package in R. The penguins_raw data set contains a range of information about Adelie, Gentoo and Chinstrap penguins, such as their development stage, flipper length, body mass and sex among others.
 
-The two variables that I will be analyzing from this data set are culmen depth (mm) and culmen length for Adelie penguins. In order to observe the general trend between culmen length and culmen depth for the 151 Adelie penguins in the data set, I created a scatter plot, with culmen depth (mm) on the x-axis and culmen length (mm) on the y-axis.
+The two variables that I will be analyzing from this data set are culmen depth (mm) and culmen length (mm) for Adelie penguins. In order to observe the general trend between culmen length and culmen depth for the 151 Adelie penguins in the data set, I created a scatter plot, with culmen depth (mm) on the x-axis and culmen length (mm) on the y-axis.
 
-To quantitatively assess the relationship between culmen depth and culmen length in Adelie penguins, I will use a linear regression model. This method will allow me to determine whether there is a statistically significant, directional relationship between these two variabes for this species of penguin. By doing so, I will be able to my null hypothesis against my alternative hypothesis.
+To quantitatively assess the relationship between culmen depth and culmen length in Adelie penguins, I will use a linear regression model. This method will allow me to determine whether there is a statistically significant, directional relationship between these two variables for this species of penguin. By doing so, I will be able to test my null hypothesis against my alternative hypothesis.
 
 Before conducting this analysis, I verified that the data met the assumptions of a linear model. I used a Q-Q plot to assess whether the residuals were normally distributed and a residuals vs fitted plot to evaluate whether the variance of the residuals was consistent across all levels of the independent variable (i.e. homoscedasticity). I also used a scale-location plot and a residuals vs factor level plot to confirm that none of the assumptions of the linear model were violated. After concluding that the data did meet the required assumptions, I fitted a linear model with culmen depth on the x-axis and culmen length on the y-axis using the lm() function and then create a visualization of this model using ggplot().
 
@@ -158,7 +156,7 @@ Normal Q-Q plot: In this plot, the residuals follow a straight line, suggesting 
 
 Scale-Location plot: The points in this plot are evenly spread along a horizontal line, indicating that the residuals have constant variance (homoscedasticity) across the range of fitted values.
 
-Residuals vs Factor levels plot: This plot shows that the residuals have a consistent spread and are centered around zero for each year, supporting the assumption of homoscedasiticy.
+Residuals vs Factor levels plot: This plot shows that the residuals have a consistent spread and are centered around zero for each year, supporting the assumption of homoscedasticity.
 
 ### Results & Discussion
 
@@ -189,11 +187,11 @@ summary(adelie_lm)
 
 ```
 
-The p-value for the intercept is highly significant, indicating that the intercept of this model is statistically different from zero. In addition to this, the p-value for culmen_depth_mm is also highly significant (p\<0.001) suggesting that the observed increase in culmen length as culmen depth increases is unlikley to have occurred by chance. This supports our alternative hypothesis, suggesting that there is a strong and statistically significant positive correlation between culmen depth and culmen length in Adelie penguins.
+The p-value for the intercept is highly significant (p \< 0.001), indicating that the intercept of this model is statistically different from zero. In addition to this, the p-value for culmen_depth_mm is also highly significant (p \< 0.001) suggesting that the observed increase in culmen length as culmen depth increases is unlikely to have occurred by chance. This supports our alternative hypothesis, suggesting that there is a strong and statistically significant positive correlation between culmen depth and culmen length in Adelie penguins.
 
-Although there is significance, the R-squared value is relatively low. This suggest that despite their being a statistically significant relationship, there are likely other factors that also contribute to the variability in culmen length, other than culmen depth.
+Although there is statistical significance in this model, the R-squared value is relatively low. This suggest that despite their being a statistically significant relationship, there are likely other factors that also contribute to the variability in culmen length, other than culmen depth.
 
-#### Results Figure: Visualisation of the Linear Regression
+#### Results Figure: Visualization of the Linear Regression
 
 ```{r}
 # Generating a scatter plot with the linear regression for culmen length and culmen depth in Adelie penguins
@@ -218,7 +216,7 @@ Overall, this linear regression model clearly portrays a positive linear relatio
 
 This analysis aimed to determine whether there is a statistically significant correlation between culmen depth and culmen length in Adelie penguins. The scatter plot demonstrated that there did appear to be a positive relationship between these two variables. The linear regression model then confirmed that this relationship was statistically significant, as indicated by the highly significant p-value for the effect of culmen depth (p \< 0.001). This suggests that it is possible that these two morphological traits are possibly coupled and evolve together. Coupling of morphological traits such as culmen length and depth could reflect evolutionary optimization for specific ecological roles and indicate that a species is well-adapted to its environment; this relationship could improve foraging efficiency and enable Adelie penguin species to better handle their prey. Understanding this relationship in more detail can allow for further exploration of its implications for the species survival and evolution.
 
-While the model is statistically significant, the low R-squared value suggest that other factors not accounted for in this model may also influence culmen length. Future research could explore other environmental or genetic influences, to further understand the mechanisms behind this observed change in culmen depth relative to culmen length.
+While the model is statistically significant, the low R-squared value suggest that other factors not accounted for in this model may also influence culmen length. Future research could explore other environmental or genetic influences, to further understand the mechanisms behind this observed change in culmen length relative to culmen depth.
 
 ------------------------------------------------------------------------
 
@@ -238,23 +236,23 @@ While the model is statistically significant, the low R-squared value suggest th
 
 -   *What elements of your partner's code helped you to understand their data pipeline?*
 
-    One element of my partner's code that helped me to understand their data pipeline, was the organisation of their code in distinct chunks, with each chunk focusing on a specific aspect of the analysis. This format made it easier for me to identify which sections fo the code generated each specific output or plot, therefore enabling me to follow and understand the analysis efficiently.
+    One element of my partner's code that helped me to understand their data pipeline, was the organisation of their code in distinct chunks, with each chunk focusing on a specific aspect of the analysis. This format made it easier for me to identify which sections of the code generated each specific output or plot, therefore enabling me to follow and understand the analysis efficiently.
 
 -   *Did it run? Did you need to fix anything?*
 
-    All of the code ran smoothly without any errors and I did not need to make any changes or fixes to the code itself. However, I did need to install a few packages before being able to successfully run the script, which was flagged by R studio. I think it would have been helpful if a message has been included at the beginning of the document specifying which packages needed to be installed This could help to ensure that users can prepare all required packages at the beginning, before attempting to run any of the code.
+    All of the code ran smoothly without any errors and I did not need to make any changes or fixes to the code itself. However, I did need to install a few packages before being able to successfully run the script, which was flagged by R studio. I think it would have been helpful if a message has been included at the beginning of the document specifying which packages needed to be installed. This could help to ensure that users can prepare all required packages at the beginning, before attempting to run any of the code.
 
 -   *What suggestions would you make for improving their code to make it more understandable or reproducible, and why?*
 
     My partner did include brief comments explaining what different sections of the code were going to do, however these descriptions were often too short to convey their full purpose. As an example, a comment like "Linear Regression" could be expanded to something more descriptive, such as "Generating a linear regression to analyse the relationship between body mass and flipper length". This level of detail can provide users with more context, especially if they are unfamiliar with the data set or analysis goals.
 
-    I also think that my pattern could improve the formatting of their code to make it easier to read. In some chunks, there were unnecessary empty spaces between lines of code that were contributing to the same output or figure. Removing these gaps can significantly improve the readability of their code.
+    I also think that my partner could improve the formatting of their code to make it easier to read. In some chunks, there were unnecessary empty spaces between lines of code that were contributing to the same output or figure. Removing these gaps can significantly improve the readability of their code.
 
 -   *If you needed to alter your partner's figure using their code, do you think that would be easy or difficult, and why?*
 
     Overall, I think that it would be relatively easy to alter different components of my partners figures using their code. The minimal code used to generate each plot makes it easier to determine which parts of the code are responsible for the different visual elements. This simplicity enhances the code's readability and adaptability.
 
-    However, there is one aspect of the code used to generate the plots that could have further clarification. In order to generate their plots my pattern has filtered the data set to only include lines 278:345, which corresponds to the chinstrap penguins. While the filtering process is required for their analysis, it was not explicitly explained in the code with a comment. Individuals that do not have prior knowledge of the data set may not understand the purpose of this step. If a user were to alter this part of the code without realizing its significance, they may inadvertently include data from other penguin species, which would alter the results of the analysis. A brief comment explaining the filtering step would make the code more reproducible.
+    However, there is one aspect of the code used to generate the plots that could have further clarification. In order to generate their plots my partner has filtered the data set to only include lines 278:345, which corresponds to the chinstrap penguins. While the filtering process is required for their analysis, it was not explicitly explained in the code with a comment. Individuals that do not have prior knowledge of the data set may not understand the purpose of this step. If a user were to alter this part of the code without realizing its significance, they may inadvertently include data from other penguin species, which would alter the results of the analysis. A brief comment explaining this filtering step would make the code more reproducible.
 
 ### d) Reflect on your own code based on your experience with your partner's code and their review of yours. (300-500 words)
 
@@ -262,16 +260,16 @@ While the model is statistically significant, the low R-squared value suggest th
 
     One suggestion made by my partner was to improve the clarity of the comment regarding the installation of the packages required to run my code. I do agree with this feedback as some individuals may not be familiar with the best practices for installing packages. Therefore, it could be helpful for me to provide more explicit instructions at the beginning of the script, listing the required packages separately from the main code and a clear comment explaining how best to install them.
 
-    Additionally, my partner suggested that i emphasize the significance of the step where i filter the data set to only include measurements for the Adelie penguins. This is a reasonable suggestion,a s while I do mention that I am focusing solely on Adelie penguins and that I filter the data accordingly, I do not explicitly state the significance of this step in the code. Emphasizing this is crucial for the reproducibility of my analysis.
+    Additionally, my partner suggested that i emphasize the significance of the step where i filter the data set to only include measurements for the Adelie penguins. This is a reasonable suggestion, as while I do mention that I am focusing solely on Adelie penguins and that I filter the data accordingly, I do not explicitly state the significance of this step in the code. Emphasizing this is crucial for the reproducibility of my analysis.
 
     Finally, my partner suggested adding a README file to provide a broad overview of the project. I do believe that my script already includes detailed information about each stage of my analysis. However, I do agree that a README file, providing a summary of the analysis, could enhance the clarity and accessibility of my work, thus being useful for others aiming to reproduce my analysis.
 
 -   *What did you learn about writing code for other people?*
 
-    One of the most important things that I have learnt about writing code for other people, is the significance fo saving a copy of the original data set and then ensuring that any edits, such as data cleaning, were made to a duplicated version. Editing the original data directly would be poor practice and hinder reproducibility of the analysis.
+    One of the most important things that I have learnt about writing code for other people, is the significance of saving a copy of the original data set and then ensuring that any edits, such as data cleaning, were made to a duplicated version. Editing the original data directly would be poor practice and hinder reproducibility of the analysis.
 
     The data set provided for this assignment was realistically large and contained a significant amount of information. typically, my approach would have been to create a new CSV file that only contained the relevant data for my analysis, excluding any unnecessary information. However, this method would not be reproducible, so instead I learned how to filter and manipulate the data within my code without altering the original data set. This approach ensures that my analysis is reproducible.
 
-    In addition to this, I recognized the importance of clarity and readability in coding. the use fo chunks in R Markdown helped to improve organization, making it easy for one to match sections of code to their corresponding figures. Moreover, adding detailed comments is also crucial, particularly for task that may be unclear to someone unfamiliar with the data set. In my analysis, it was important for me to explicitly state that i filtered the data set to focus on Adelie penguins. Clarifying the significance of this step for my analysis ensures that others understand its importance in ensuring reproducibility.
+    In addition to this, I recognized the importance of clarity and readability in coding. The use of chunks in R Markdown helped to improve organization, making it easy for one to match sections of code to their corresponding figures. Moreover, adding detailed comments is also crucial, particularly for task that may be unclear to someone unfamiliar with the data set. In my analysis, it was important for me to explicitly state that i filtered the data set to focus on Adelie penguins. Clarifying the significance of this step for my analysis ensures that others understand its importance for reproducibility.
 
     Lastly, this assignment helped me to become more familiar with git and how it is useful for tracking changes over time. It ensures that others are familiar with any recent changes that may have been made, which is important for reproducibility.
